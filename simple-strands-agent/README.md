@@ -20,6 +20,18 @@ Simple Strands Agent (SSA) is a minimal, hackable harness for autonomous softwar
 
 The harness is built for **rapid experimentation** — swap models, tune prompts, adjust tool behavior, and benchmark all in a single config change. Despite its simplicity, SSA delivers SOTA-level results on widely-used coding benchmarks including **SWE-Bench Verified**, **SWE-Bench Pro**, and **Terminal Bench 2**.
 
+**SWE-Bench Verified:**
+
+<img src="resources/img/plot_nature_tones_swe_verified_ssa.svg" alt="SWE-Bench Verified results" width="80%"/>
+
+**SWE-Bench Pro:**
+
+<img src="resources/img/plot_nature_tones_swe_pro_ssa.svg" alt="SWE-Bench Pro results" width="80%"/>
+
+**Terminal Bench 2:**
+
+<img src="resources/img/plot_nature_tones_tb2_ssa_constrained.svg" alt="Terminal Bench 2 results" width="80%"/>
+
 ## Highlights
 
 - **Model-agnostic** — first-class adapters for Anthropic, OpenAI, Google, xAI, Bedrock, and any OpenAI-compatible endpoint (vLLM, LiteLLM, Together, Vertex, Z.AI).
@@ -70,8 +82,15 @@ uv run python -m ssa.run \
 
 SSA uses [Hydra](https://hydra.cc/) for configuration. All configs live in `src/ssa/configs/`, and any parameter can be overridden from the command line. Start from `src/ssa/configs/default.yaml` for the full schema, then mix in a model-specific config as needed.
 
-## Repository Layout
+## Design and Repository Layout
 
+SSA's design and execution loop can be summarized in the following figure:
+
+<img src="resources/img/ssa_architecture_animation.gif" alt="SSA architecture" width="80%"/>
+
+
+
+The code is structured as follows:
 ```
 src/ssa/
 ├── agent.py / agent_runner.py     # Core agent loop

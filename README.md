@@ -1,3 +1,11 @@
+<div align="center">
+  <div>
+    <a href="https://strandsagents.com">
+      <img src="https://strandsagents.com/latest/assets/logo-github.svg" alt="Strands Agents" width="55px" height="105px">
+    </a>
+  </div>
+</div>
+
 # Strands Benchmark Harnesses
 
 A repository for Strands-based agents and harnesses for agentic benchmarks. It is a

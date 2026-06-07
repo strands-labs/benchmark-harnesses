@@ -20,17 +20,6 @@ Simple Strands Agent (SSA) is a minimal, hackable harness for autonomous softwar
 
 The harness is built for **rapid experimentation** — swap models, tune prompts, adjust tool behavior, and benchmark all in a single config change. Despite its simplicity, SSA delivers SOTA-level results on widely-used coding benchmarks including **SWE-Bench Verified**, **SWE-Bench Pro**, and **Terminal Bench 2**.
 
-**SWE-Bench Verified:**
-
-<img src="resources/img/plot_nature_tones_swe_verified_ssa.svg" alt="SWE-Bench Verified results" width="80%"/>
-
-**SWE-Bench Pro:**
-
-<img src="resources/img/plot_nature_tones_swe_pro_ssa.svg" alt="SWE-Bench Pro results" width="80%"/>
-
-**Terminal Bench 2:**
-
-<img src="resources/img/plot_nature_tones_tb2_ssa_constrained.svg" alt="Terminal Bench 2 results" width="80%"/>
 
 ## Highlights
 
@@ -40,14 +29,14 @@ The harness is built for **rapid experimentation** — swap models, tune prompts
 - **Hydra-powered configs** — every knob is overridable from the command line; experiments are reproducible from a single YAML.
 - **Built-in benchmarking** — turnkey scripts for SWE-Bench Verified, SWE-Bench Pro, and Terminal Bench 2, including S3 result upload.
 
-## Prerequisites
-
-- **Python** 3.12+
-- **Docker** (for containerized task environments)
-- **AWS credentials** configured for Bedrock model access and ECR image pulls
-- **[uv](https://github.com/astral-sh/uv)** package manager (recommended)
 
 ## Installation
+
+#### Requirements
+- **Python** 3.12+
+- **Docker** for containerized task environments
+- **AWS credentials** if using Amazon Bedrock for model access and/or Amazon ECR for docker images
+- **[uv](https://github.com/astral-sh/uv)** package manager (optional, but recommended)
 
 This package lives in the [`strands-benchmark-harnesses`](https://github.com/strands-labs/strands-benchmark-harnesses)
 monorepo as a [uv workspace](https://docs.astral.sh/uv/concepts/projects/workspaces/) member.
@@ -82,9 +71,26 @@ uv run python -m ssa.run \
 
 SSA uses [Hydra](https://hydra.cc/) for configuration. All configs live in `src/ssa/configs/`, and any parameter can be overridden from the command line. Start from `src/ssa/configs/default.yaml` for the full schema, then mix in a model-specific config as needed.
 
+
+## Results
+
+**SWE-Bench Verified:**
+
+<img src="resources/img/plot_nature_tones_swe_verified_ssa.svg" alt="SWE-Bench Verified results" width="80%"/>
+
+**SWE-Bench Pro:**
+
+<img src="resources/img/plot_nature_tones_swe_pro_ssa.svg" alt="SWE-Bench Pro results" width="80%"/>
+
+**Terminal Bench 2:**
+
+<img src="resources/img/plot_nature_tones_tb2_ssa_constrained.svg" alt="Terminal Bench 2 results" width="80%"/>
+
+
+
 ## Design and Repository Layout
 
-SSA's design and execution loop can be summarized in the following figure:
+SSA's design and execution loop is summarized in the following figure:
 
 <img src="resources/img/ssa_architecture_animation.gif" alt="SSA architecture" width="80%"/>
 

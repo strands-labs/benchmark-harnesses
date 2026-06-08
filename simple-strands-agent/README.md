@@ -42,8 +42,8 @@ This package lives in the [`strands-benchmark-harnesses`](https://github.com/str
 monorepo as a [uv workspace](https://docs.astral.sh/uv/concepts/projects/workspaces/) member.
 
 ```bash
-git clone https://github.com/strands-labs/strands-benchmark-harnesses.git
-cd strands-benchmark-harnesses
+git clone https://github.com/strands-labs/benchmark-harnesses.git
+cd benchmark-harnesses
 
 # Recommended: sync the workspace (creates .venv with this package + its deps)
 uv sync
@@ -66,10 +66,17 @@ uv run python -m ssa.run \
     env.docker.workdir="/testbed"
 ```
 
+We provide simple scripts for running instances from [SWE-Bench Verified](/simple-strands-agent/scripts/swe_verified/run.sh), [SWE-Bench Pro](/simple-strands-agent/scripts/swe_pro/run.sh), and [Terminal-Bench-2](/simple-strands-agent/scripts/tb2/run.sh) (and see [this](/simple-strands-agent/scripts/tb2/run_harbor.sh) for running Terminal-Bench-2 with SSA's harbor plugin).
 
 ## Configuration
 
-SSA uses [Hydra](https://hydra.cc/) for configuration. All configs live in `src/ssa/configs/`, and any parameter can be overridden from the command line. Start from `src/ssa/configs/default.yaml` for the full schema, then mix in a model-specific config as needed.
+SSA uses [Hydra](https://hydra.cc/) for configuration. All configs live in [`src/ssa/configs/`](/simple-strands-agent/src/ssa/configs/), and any parameter can be overridden from the command line. Start from [`src/ssa/configs/default.yaml`](/simple-strands-agent/src/ssa/configs/default.yaml) for the full schema, then mix in a model-specific config as needed.
+
+
+## Architecture
+SSA's design and execution loop is summarized in the following figure:
+
+<img src="resources/img/ssa_arch.png" alt="SSA architecture" width="80%"/>
 
 
 ## Results
@@ -80,7 +87,7 @@ SSA uses [Hydra](https://hydra.cc/) for configuration. All configs live in `src/
 
 **SWE-Bench Pro:**
 
-<img src="resources/img/plot_nature_tones_swe_pro_ssa.svg" alt="SWE-Bench Pro results" width="80%"/>
+<img src="resources/img/plot_nature_tones_swe_pro_ssa.png" alt="SWE-Bench Pro results" width="80%"/>
 
 **Terminal Bench 2:**
 
@@ -88,14 +95,7 @@ SSA uses [Hydra](https://hydra.cc/) for configuration. All configs live in `src/
 
 
 
-## Design and Repository Layout
-
-SSA's design and execution loop is summarized in the following figure:
-
-<img src="resources/img/ssa_architecture_animation.gif" alt="SSA architecture" width="80%"/>
-
-
-
+## Repository Layout
 The code is structured as follows:
 ```
 src/ssa/

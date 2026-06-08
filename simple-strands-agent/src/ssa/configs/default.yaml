@@ -1,4 +1,3 @@
-# TODO: (vatshank) add TB2 related fields. (dataset.name)
 max_llm_iterations: 500
 env:
   env_type: docker  # "docker" or "local"
@@ -9,7 +8,7 @@ env:
   docker:
     base_image: "swebench/sweb.eval.x86_64.django_1776_django-15987"
     workdir: "/testbed"
-    hold_command: "bash" # TODO: can be done with docker api instead?
+    hold_command: "bash"
     command_prefix: ""
     root_setup_commands: ["apt-get update && apt-get install ripgrep"]
     setup_commands: []

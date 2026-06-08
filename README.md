@@ -22,6 +22,8 @@ root coordinates one or more member packages. Setup, configuration, and usage li
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 [![Docker](https://img.shields.io/badge/docker-required-2496ED.svg?logo=docker&logoColor=white)](https://www.docker.com/)
 
+For a summary of the work, see the [post on Amazon-Science.](https://www.amazon.science/blog/bridging-intent-and-execution-in-agentic-systems)
+
 ---
 
 ### Overview

@@ -14,6 +14,9 @@
 
 ---
 
+For a summary of the work, see the [post on Amazon-Science.](https://www.amazon.science/blog/bridging-intent-and-execution-in-agentic-systems)
+
+
 ## Overview
 
 Simple Strands Agent (SSA) is a minimal, hackable harness for autonomous software engineering. It pairs frontier LLMs (Claude, GPT, Gemini, and open-weight models via Bedrock/LiteLLM/vLLM) with `bash` and file-editing tools inside isolated Docker environments to analyze codebases, diagnose bugs, write patches, and verify solutions.

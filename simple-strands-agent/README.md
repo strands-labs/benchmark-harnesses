@@ -114,6 +114,18 @@ scripts/
 ├── swe_verified/ • swe_pro/ • tb2/
 ```
 
+Please consider citing as follows, if you find this work useful!
+```
+@misc{2026simplestrandsagent,
+      title={Dissecting model behavior through agent trajectories},
+      author={Gaurav Gupta and Vatshank Chaturvedi and Jun Huan and Anoop Deoras},
+      year={2026},
+      eprint={2606.17454},
+      archivePrefix={arXiv},
+      url={https://arxiv.org/abs/2606.17454},
+}
+```
+
 ## License
 
 Released under the [Apache License 2.0](LICENSE).

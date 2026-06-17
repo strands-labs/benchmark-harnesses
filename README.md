@@ -121,6 +121,18 @@ scripts/
 ├── swe_verified/ • swe_pro/ • tb2/
 ```
 
+Please consider citing as follows, if you find SSA useful!
+```
+@misc{2026simplestrandsagent,
+      title={Dissecting model behavior through agent trajectories},
+      author={Gaurav Gupta and Vatshank Chaturvedi and Jun Huan and Anoop Deoras},
+      year={2026},
+      eprint={2606.17454},
+      archivePrefix={arXiv},
+      url={https://arxiv.org/abs/2606.17454},
+}
+```
+
 ## Running agents safely
 
 Agents in this repository are given access to shell tools. In practice, this means the model can run commands in the environment where the agent is started.

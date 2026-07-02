@@ -37,7 +37,7 @@ dependencies = [
     "openai>=2.21.0,<3.0.0",
     "pydantic>=2.12.5,<3.0.0",
     "requests>=2.32.5,<3.0.0",
-    "strands-agents>=1.27.0,<=1.27.0",
+    "strands-agents==1.45.0",
     "harbor==0.2.0",
     "xai-sdk>=1.11.0,<2.0.0",
     "openpyxl>=3.1.5,<4.0.0",

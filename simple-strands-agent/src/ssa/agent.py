@@ -6,6 +6,7 @@ from strands.agent.agent import AgentResult, AgentInput
 from strands.event_loop.event_loop import event_loop_cycle
 from strands.types.exceptions import ContextWindowOverflowException, MaxTokensReachedException
 from strands.types._events import TypedEvent
+from strands.types.agent import Limits
 from strands.tools.structured_output._structured_output_context import StructuredOutputContext
 from pydantic import BaseModel
 
@@ -39,7 +40,8 @@ class StrandsResolverAgent(Agent):
         )
 
     async def _execute_event_loop_cycle(
-        self, invocation_state: dict[str, Any], structured_output_context: StructuredOutputContext | None = None
+        self, invocation_state: dict[str, Any], structured_output_context: StructuredOutputContext | None = None,
+        limits: Limits | None = None,
     ) -> AsyncGenerator[TypedEvent, None]:
         """Execute the event loop cycle with retry logic for context window limits.
 
@@ -64,6 +66,7 @@ class StrandsResolverAgent(Agent):
                 agent=self,
                 invocation_state=invocation_state,
                 structured_output_context=structured_output_context,
+                limits=limits,
             )
             async for event in events:
                 yield event

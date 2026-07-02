@@ -34,7 +34,7 @@ async def test_agent_context_overflow_retries_with_reduce(monkeypatch):
 
     call_count = {"n": 0}
 
-    async def fake_cycle(*, agent, invocation_state, structured_output_context=None):
+    async def fake_cycle(*, agent, invocation_state, structured_output_context=None, limits=None):
         call_count["n"] += 1
         if call_count["n"] == 1:
             raise ContextWindowOverflowException("context too big")
@@ -65,7 +65,7 @@ async def test_agent_max_tokens_retries_with_last_message_popped(monkeypatch):
 
     call_count = {"n": 0}
 
-    async def fake_cycle(*, agent, invocation_state, structured_output_context=None):
+    async def fake_cycle(*, agent, invocation_state, structured_output_context=None, limits=None):
         call_count["n"] += 1
         if call_count["n"] == 1:
             raise MaxTokensReachedException("max tokens")

@@ -225,12 +225,30 @@ class DockerConnector:
         self.docker_type = cfg.docker_type
         self.docker_workdir = cfg.workdir
         self.host_mount = os.path.abspath(host_mount)
-        self.client: DockerClient = docker.from_env(timeout=600)  # 10 minute timeout for large image pulls
+        self.client: DockerClient = self._connect_to_docker()
         self.internet_access: bool = cfg.internet_access
         self.container: Optional[Container] = None
         self.command_prefix = cfg.command_prefix
         self.setup_commands: List[str] = cfg.setup_commands
         self.identifier = kwargs.get("identifier", None)
+
+    @staticmethod
+    def _connect_to_docker() -> DockerClient:
+        """
+            Connect to the Docker daemon, failing fast with an actionable error.
+        """
+        try:
+            # 10 minute timeout for large image pulls
+            client = docker.from_env(timeout=600)
+            client.ping()
+        except docker.errors.DockerException as e:
+            raise RuntimeError(
+                "env_type=docker requires a running Docker daemon, but it could "
+                "not be reached. Ensure Docker is installed and running "
+                "(e.g. start Docker Desktop), then try again.\n"
+                f"Underlying error: {e}"
+            ) from e
+        return client
 
     def run_root_setup_commands(self) -> None:
         """Run setup commands as root (e.g. apt-get install)."""

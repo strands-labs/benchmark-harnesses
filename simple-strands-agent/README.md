@@ -14,6 +14,8 @@
 
 ---
 
+For more details, see the [technical report](https://arxiv.org/abs/2606.17454).
+
 For a summary of the work, see the [post on Amazon-Science.](https://www.amazon.science/blog/bridging-intent-and-execution-in-agentic-systems)
 
 

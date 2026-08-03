@@ -1,4 +1,4 @@
-from botocore.exceptions import ClientError, ReadTimeoutError
+from botocore.exceptions import ClientError, ReadTimeoutError, EventStreamError
 from urllib3.exceptions import ReadTimeoutError as URLLib3ReadTimeoutError
 from urllib3.exceptions import ProtocolError
 import logging
@@ -18,6 +18,9 @@ LOG = logging.getLogger(__name__)
 BEDROCK_CONTEXT_WINDOW_OVERFLOW_MESSAGES = [
     "model is getting throttled",
     "read timed out"
+]
+BEDROCK_SERVER_ERROR_MESSAGES = [
+    "system encountered an unexpected error during processing",
 ]
 
 
@@ -118,6 +121,15 @@ class SRBedrockModel(BedrockModel):
             if any(throttle_message in error_message.lower() for throttle_message in BEDROCK_CONTEXT_WINDOW_OVERFLOW_MESSAGES):
                 LOG.warning("bedrock threw throttling/timeout error")
                 raise ModelThrottledException(error_message) from e
-        except (ReadTimeoutError, ProtocolError, URLLib3ReadTimeoutError) as e:
+
+            if any(server_err_msg in error_message.lower() for server_err_msg in BEDROCK_SERVER_ERROR_MESSAGES):
+                LOG.warning("bedrock threw system stream error")
+                raise ModelThrottledException(error_message) from e
+        except (
+            ReadTimeoutError,
+            ProtocolError,
+            URLLib3ReadTimeoutError,
+            EventStreamError,
+            ) as e:
             error_message = str(e)
             raise ModelThrottledException(error_message) from e

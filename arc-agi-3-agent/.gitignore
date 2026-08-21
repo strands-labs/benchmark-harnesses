@@ -1,0 +1,10 @@
+# Runtime artefacts produced by prolong-swarm runs
+evaluation_results/
+memory/
+checkpoints/
+release_logs/
+wandb/
+
+# Local secrets (ARC_API_KEY, AWS settings)
+.env
+.env.*

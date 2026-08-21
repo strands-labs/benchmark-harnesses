@@ -136,6 +136,61 @@ Please consider citing as follows, if you find SSA useful!
 }
 ```
 
+---
+
+### ARC-AGI-3 Agent
+
+**A long-horizon agent that learns unfamiliar interactive environments from its own logs — 99.95% on the public ARC-AGI-3 game set.**
+
+[![Python](https://img.shields.io/badge/python-3.12%2B-blue.svg)](https://www.python.org/downloads/)
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
+[![Bedrock](https://img.shields.io/badge/Amazon-Bedrock-232F3E.svg?logo=amazonaws&logoColor=white)](https://aws.amazon.com/bedrock/)
+---
+
+### Overview
+
+[ARC-AGI-3](https://three.arcprize.org) is a set of interactive games that ship with no instructions: to win one, an agent has to work out what the controls do, what it is looking at, and what counts as progress — by playing. The benchmark exists to measure learning from experience.
+
+This harness pairs the Strands Agents SDK with Amazon Bedrock to play those games from a blank slate. The board is never pasted into the prompt. Instead the runner appends every observation to an append-only `logs.txt` and hands the agent the *path* to that file; the agent writes and runs its own code against the log to extract what it needs, forms hypotheses about the mechanics, tests them, and keeps the scripts that prove useful. Context stays small while history grows without bound, and the agent's accumulated scripts become its memory.
+
+It is built on [PRO-LONG](https://github.com/alexisfox7/PRO-LONG), which contributes the game loop and the append-only log.
+
+### Highlights
+
+- **No priors** — actions are named `ACTION1..ACTION6` with no meaning attached, cell values are unnamed, and no game structure is asserted. One prompt serves all 25 games.
+- **Context via code, not context windows** — the agent greps, parses and aggregates a log that reaches tens of megabytes, deciding each turn which slice is worth loading.
+- **Sandboxed tools** — six tools (`read_file`, `write_file`, `edit_file`, `grep`, `glob_files`, `bash`) execute inside [bubblewrap](https://github.com/containers/bubblewrap) with no network and no cloud credentials; the only channel back to the runner is `actions.json`.
+- **Log access analysed** — the agent's 260 log-reading scripts from the record run are classified into six access patterns, with the design lessons that follow.
+
+### Results
+
+Claude Opus 5 (High) on Amazon Bedrock, public game set, competition mode:
+
+| | |
+|---|---|
+| score | **99.95%** |
+| levels | 183 / 183 |
+| environments | 25 / 25 |
+| scorecard | [`8a10b024-3560-448f-ac31-becc48affe5b`](https://arcprize.org/scorecards/8a10b024-3560-448f-ac31-becc48affe5b) |
+
+[All 25 games rendered from the run's own logs](arc-agi-3-agent/assets/arc_agi3_25games.gif) (animation, 4 MB).
+
+### Repository Layout
+```
+prolong_agent/
+├── agent/          # Strands + Bedrock agent, sandboxed tools, orchestrator, prompts
+├── environment/    # ARC-AGI-3 game loop and API wrapper
+└── metrics/ • utils/
+```
+
+Setup, flags, cost guidance and a breakdown of what is new versus PRO-LONG are in the
+[agent README](arc-agi-3-agent/README.md).
+
+> **Note:** this agent is a standalone uv project rather than a workspace member, because it
+> pins `strands-agents==1.50.1` and the workspace's single lockfile already pins `==1.45.0` for
+> `simple-strands-agent`. It has its own `uv.lock` — the one used for the run above — so build
+> it with `cd arc-agi-3-agent && uv sync --frozen`.
+
 ## Running agents safely
 
 Agents in this repository are given access to shell tools. In practice, this means the model can run commands in the environment where the agent is started.

@@ -1,5 +1,4 @@
 import os
-import json
 from dataclasses import dataclass
 import difflib
 import logging
@@ -537,9 +536,6 @@ def str_replace_editor(tool: ToolUse, **kwargs: Any) -> ToolResult:
         if mode is None:
             raise ValueError("mode parameter is required")
 
-        data = json.dumps(tool_input, indent=4, ensure_ascii=False)
-        LOG.info(data.encode().decode("unicode_escape")) 
-
         # Create table grid for side-by-side display
         grid = Table.grid(expand=True)
         grid.add_column("Original", justify="left", ratio=1)
@@ -752,7 +748,6 @@ def str_replace_editor(tool: ToolUse, **kwargs: Any) -> ToolResult:
                             n=3, 
                         )
                         diff_str = "\n".join(diffs)
-                        LOG.info(f"Applied diff:\n{diff_str}")
                         # Write new content
                         environment.write_file(new_content, path)
 
@@ -788,7 +783,6 @@ def str_replace_editor(tool: ToolUse, **kwargs: Any) -> ToolResult:
                         n=3, 
                     )
                     diff_str = "\n".join(diffs)
-                    LOG.info(f"Applied diff:\n{diff_str}")
                     # Write new content
                     environment.write_file(new_content, path)
 
@@ -821,8 +815,6 @@ def str_replace_editor(tool: ToolUse, **kwargs: Any) -> ToolResult:
             formatted_output = format_output("↩️ Undo Complete", f"Successfully reverted changes to {path}", "yellow")
             console.print(formatted_output)
             result = f"Successfully reverted changes to {path}. No further backup exists for this file"
-
-            LOG.info(f"Successful undo-edit : {result}")
 
         if len(result) > max_chars_limit:
             LOG.info(f"Clipping str_replace output for mode: {mode} due to chars len ({len(result)}) exceeding limit ({max_chars_limit})")

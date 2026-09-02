@@ -8,3 +8,9 @@
 
 [tool.uv.workspace]
 members = ["simple-strands-agent"]
+# arc-agi-3-agent is deliberately NOT a workspace member. It requires
+# strands-agents==1.50.1, which cannot co-resolve with simple-strands-agent's
+# strands-agents==1.45.0 in the workspace's single shared lockfile. It is a
+# standalone uv project with its own pyproject.toml and uv.lock:
+#   cd arc-agi-3-agent && uv sync
+exclude = ["arc-agi-3-agent"]

@@ -1,0 +1,53 @@
+[build-system]
+requires = ["setuptools>=77.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "arc-agi-3-agent"
+version = "0.1.0"
+description = "A long-horizon Strands Agent on Amazon Bedrock for the ARC-AGI-3 interactive reasoning benchmark."
+readme = "README.md"
+authors = [
+    { name = "Chen Wu" },
+]
+license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE"]
+requires-python = ">=3.12"
+keywords = ["strands", "strands-agents", "bedrock", "amazon-bedrock", "arc-agi", "agent"]
+dependencies = [
+    "arc-agi>=0.9.9",
+    "arcengine>=0.9.3",
+    "python-dotenv>=1.0",
+    "requests>=2.31",
+    "strands-agents==1.50.1",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
+[project.urls]
+Homepage = "https://github.com/strands-labs/benchmark-harnesses/tree/main/arc-agi-3-agent"
+Documentation = "https://github.com/strands-labs/benchmark-harnesses/tree/main/arc-agi-3-agent#readme"
+Repository = "https://github.com/strands-labs/benchmark-harnesses.git"
+Issues = "https://github.com/strands-labs/benchmark-harnesses/issues"
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "ruff",
+]
+
+[project.scripts]
+prolong-swarm = "prolong_agent.agent.swarm:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["prolong_agent", "prolong_agent.*"]
+exclude = ["examples*", "rllm*", "Agent_Context*"]

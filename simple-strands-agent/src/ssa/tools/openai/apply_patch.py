@@ -1,5 +1,4 @@
 import os
-import json
 import difflib
 import logging
 from typing import Any
@@ -718,9 +717,6 @@ def apply_patch(tool: ToolUse, **kwargs: Any) -> ToolResult:
     _tool_cfg = kwargs.get("tool_params", {}).get("openai.apply_patch", {})
     restrict_workspace_create: bool = _tool_cfg.get("restrict_workspace_create", kwargs.get("restrict_workspace_create", True))
     collapse_envelopes: bool = _tool_cfg.get("collapse_envelopes", kwargs.get("collapse_envelopes", False))
-
-    data = json.dumps(tool_input, indent=4, ensure_ascii=False)
-    LOG.info(data.encode().decode("unicode_escape"))
 
     try:
         # Validate required parameters

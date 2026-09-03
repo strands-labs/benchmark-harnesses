@@ -1,5 +1,4 @@
 import os
-import json
 import difflib
 import logging
 import shlex
@@ -144,9 +143,6 @@ def file_edit(tool: ToolUse, **kwargs: Any) -> ToolResult:
         if mode is None:
             raise ValueError("command parameter is required")
 
-        data = json.dumps(tool_input, indent=4, ensure_ascii=False)
-        LOG.info(data.encode().decode("unicode_escape"))
-
         grid = Table.grid(expand=True)
         grid.add_column("Original", justify="left", ratio=1)
         grid.add_column("Arrow", justify="center", width=5)
@@ -257,7 +253,6 @@ def file_edit(tool: ToolUse, **kwargs: Any) -> ToolResult:
                 n=3,
             )
             diff_str = "\n".join(diffs)
-            LOG.info(f"Applied diff:\n{diff_str}")
 
             environment.write_file(new_content, path)
 
@@ -285,7 +280,6 @@ def file_edit(tool: ToolUse, **kwargs: Any) -> ToolResult:
             _ = environment.execute_bash(command, workdir=workdir)
 
             result = f"Successfully reverted changes to {path}. No further backup exists for this file"
-            LOG.info(f"Successful undo-edit : {result}")
 
         if len(result) > max_chars_limit:
             LOG.info(

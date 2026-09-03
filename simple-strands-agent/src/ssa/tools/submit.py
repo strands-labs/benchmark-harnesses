@@ -1,4 +1,3 @@
-import json
 import logging
 from typing import Dict, Any
 import traceback
@@ -80,9 +79,6 @@ def submit(tool: ToolUse, **kwargs: Any) -> ToolResult:
         missing_paths = [p for p in tool_input["paths"] if not environment.file_exists(p)]
         if missing_paths:
             raise ValueError(f"The following paths do not exist: {missing_paths}")
-
-        data = json.dumps(tool_input, indent=4, ensure_ascii=False)
-        LOG.info(data.encode().decode("unicode_escape")) 
 
         request_state["stop_event_loop"] = True
         request_state["submit_paths"] = tool_input["paths"] 
